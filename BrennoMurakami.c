@@ -49,6 +49,8 @@ void diminuir_y(){
 
 void monitoramento_teclas(LISTA **lista){
     int tecla;
+    LISTA *q;
+    q = *lista;
     do {
         if (_kbhit()) {
             tecla = _getch();
@@ -124,6 +126,12 @@ void monitoramento_teclas(LISTA **lista){
                     atualizar_cursor(x, y);
                 }
                 else{
+                    if(x == 90){
+                        if(q->next == NULL){
+                            criar_linha_final(lista);
+                            q = q->next;
+                        }
+                    }
                     inserir_caractere_posicao(lista, tecla, y-1, x-1);
                     system("cls");
                     exibir(*lista);
