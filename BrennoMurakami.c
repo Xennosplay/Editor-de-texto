@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <conio.h>
+#include "BrennoMurakamiEstrutura.h"
 
 int x = 1, y = 1;
 
@@ -12,9 +13,8 @@ void atualizar_cursor(int nx, int ny) {
     gotoxy(nx, ny);
 }
 
-void monitoramento_teclas(){
-    char entrada[256];  // Array para armazenar a entrada do usuário
-    int posicao = 0, tecla;    // Posição atual na entrada
+void monitoramento_teclas(LISTA **lista){
+    int tecla;    // Posição atual na entrada
     printf("(Pressione 'ESC' para sair):\n");
     do {
         if (_kbhit()) {
@@ -32,14 +32,10 @@ void monitoramento_teclas(){
             }
 
             //Backspace
-            if (tecla == 8 && posicao > 0) {
-                printf("\b \b");  // Move o cursor uma posição para trás e apaga o caractere
-                posicao--;
-                entrada[posicao] = '\0';  // Remove o último caractere da entrada
+            if (tecla == 8) {
+
             } else if(tecla != 224 || tecla != 0 || tecla != 134){
-                printf("%c", tecla);
-                entrada[posicao] = tecla;  // Armazena o caractere na entrada
-                posicao++;
+
             }
 
             //Teclas especiais
@@ -117,6 +113,11 @@ void monitoramento_teclas(){
 }
 
 void main() {
+    LISTA *lista;
+
     gotoxy(x, y);
-    monitoramento_teclas();
+
+    inicializar(&lista);
+    criar_linha_comeco(&lista);
+    monitoramento_teclas(&lista);
 }
