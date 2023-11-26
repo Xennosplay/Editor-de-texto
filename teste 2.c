@@ -1,39 +1,104 @@
 #include <stdio.h>
 #include <conio.h>
 
-int main() {
-    printf("Digite algo (Pressione 'q' para sair):\n");
-
+void monitoramento_teclas(){
     char entrada[256];  // Array para armazenar a entrada do usuário
-    int posicao = 0;    // Posição atual na entrada
-
+    int posicao = 0, tecla;    // Posição atual na entrada
+    printf("(Pressione 'ESC' para sair):\n");
     do {
         if (_kbhit()) {
-            char tecla = _getch();
+            tecla = _getch();
 
-            // Verifica se a tecla 'q' foi pressionada para sair do programa
+            //ESC
             if (tecla == 27) {
                 printf("Tecla 'ESC' pressionada. Finalizando o programa.\n");
                 break;
             }
 
-            // Verifica se a tecla Backspace foi pressionada para apagar o último caractere
+            //Backspace
             if (tecla == 8 && posicao > 0) {
                 printf("\b \b");  // Move o cursor uma posição para trás e apaga o caractere
                 posicao--;
                 entrada[posicao] = '\0';  // Remove o último caractere da entrada
-            } else {
+            } else if(tecla != 224 || tecla != 0 || tecla != 134){
                 printf("%c", tecla);
                 entrada[posicao] = tecla;  // Armazena o caractere na entrada
                 posicao++;
             }
 
-            if (tecla == 0 || tecla == 224) {
-                printf("\nTecla F1 pressionada.\n");
+            //Teclas especiais
+            if (tecla == 224 || tecla == 0) {
+                tecla = _getch();
+                switch (tecla){
+                    case 59:
+                        printf("\nTecla F1 pressionada.\n");
+                        break;
+                    case 60:
+                        printf("\nTecla F2 pressionada.\n");
+                        break;
+                    case 61:
+                        printf("\nTecla F3 pressionada.\n");
+                        break;
+                    case 62:
+                        printf("\nTecla F4 pressionada.\n");
+                        break;
+                    case 63:
+                        printf("\nTecla F5 pressionada.\n");
+                        break;
+                    case 64:
+                        printf("\nTecla F6 pressionada.\n");
+                        break;
+                    case 65:
+                        printf("\nTecla F7 pressionada.\n");
+                        break;
+                    case 66:
+                        printf("\nTecla F8 pressionada.\n");
+                        break;
+                    case 67:
+                        printf("\nTecla F9 pressionada.\n");
+                        break;
+                    case 68:
+                        printf("\nTecla F10 pressionada.\n");
+                        break;
+                    case 134:
+                        printf("\nTecla F12 pressionada.\n");
+                        break;
+                    case 77:
+                        printf("\nSeta Direita");
+                        break;
+                    case 80:
+                        printf("\nSeta Baixo");
+                        break;
+                    case 75:
+                        printf("\nSeta Esquerda");
+                        break;
+                    case 72:
+                        printf("\nSeta Cima");
+                        break;
+                    case 82:
+                        printf("\nInsert");
+                        break;
+                    case 83:
+                        printf("\nDelete");
+                        break;
+                    case 79:
+                        printf("\nEnd");
+                        break;
+                    case 71:
+                        printf("\nHome");
+                        break;
+                    case 73:
+                        printf("\nPageUP");
+                        break;
+                    case 81:
+                        printf("\nPageDown");
+                        break;
+                }
             }
         }
+    } while (1);
+}
 
-    } while (1);  // Loop infinito
-
-    return 0;
+void main() {
+    monitoramento_teclas();
 }
