@@ -48,7 +48,7 @@ void diminuir_y(){
 }
 
 void monitoramento_teclas(LISTA **lista){
-    int tecla;    // Posição atual na entrada
+    int tecla;
     do {
         if (_kbhit()) {
             tecla = _getch();
@@ -110,7 +110,7 @@ void monitoramento_teclas(LISTA **lista){
 
                 //BACKSPACE
                 if (tecla == 8) {
-                    printf("\b \b");
+//                    printf("\b \b");
                     diminuir_x();
                 }
                 //ESC
@@ -124,7 +124,9 @@ void monitoramento_teclas(LISTA **lista){
                     atualizar_cursor(x, y);
                 }
                 else{
-                    printf("%c", tecla);
+                    inserir_caractere_posicao(lista, tecla, y-1, x-1);
+                    system("cls");
+                    exibir(*lista);
                     aumentar_x();
                 }
             }
