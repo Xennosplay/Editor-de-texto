@@ -13,6 +13,10 @@ void atualizar_cursor(int nx, int ny) {
     gotoxy(nx, ny);
 }
 
+void limpar_tela(){
+    system("cls");
+}
+
 void aumentar_x(){
     if(x < 90){
         x++;
@@ -112,7 +116,15 @@ void monitoramento_teclas(LISTA **lista){
 
                 //BACKSPACE
                 if (tecla == 8) {
-//                    printf("\b \b");
+                    if(x == 1){
+
+                    }
+                    else{
+                        remover_caractere_posicao(lista,y-1, x);
+
+                    }
+                    limpar_tela();
+                    exibir(*lista);
                     diminuir_x();
                 }
                 //ESC
@@ -123,6 +135,7 @@ void monitoramento_teclas(LISTA **lista){
                 else if(tecla == 13){
                     y++;
                     x = 1;
+                    criar_linha_posicao(lista, y-2);
                     atualizar_cursor(x, y);
                 }
                 else{
@@ -133,7 +146,7 @@ void monitoramento_teclas(LISTA **lista){
                         }
                     }
                     inserir_caractere_posicao(lista, tecla, y-1, x-1);
-                    system("cls");
+                    limpar_tela();
                     exibir(*lista);
                     aumentar_x();
                 }
