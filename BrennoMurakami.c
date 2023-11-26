@@ -13,99 +13,119 @@ void atualizar_cursor(int nx, int ny) {
     gotoxy(nx, ny);
 }
 
+void aumentar_x(){
+    if(x < 90){
+        x++;
+    }
+    else{
+        y++;
+        x = 1;
+    }
+    atualizar_cursor(x, y);
+}
+
+void diminuir_x(){
+    if(x > 1){
+        x--;
+    }
+    else if(y > 1){
+        y--;
+        x = 90;
+    }
+    atualizar_cursor(x, y);
+}
+
+void aumentar_y(){
+    y++;
+    atualizar_cursor(x, y);
+}
+
+void diminuir_y(){
+    if(y > 1){
+        y--;
+    }
+    atualizar_cursor(x, y);
+}
+
 void monitoramento_teclas(LISTA **lista){
     int tecla;    // Posição atual na entrada
-    printf("(Pressione 'ESC' para sair):\n");
     do {
         if (_kbhit()) {
             tecla = _getch();
-
-            //ESC
-            if (tecla == 27) {
-                printf("Tecla 'ESC' pressionada. Finalizando o programa.\n");
-                break;
-            }
-
-            if(tecla == 13){
-                y++;
-                atualizar_cursor(x, y);
-            }
-
-            //Backspace
-            if (tecla == 8) {
-
-            } else if(tecla != 224 || tecla != 0 || tecla != 134){
-
-            }
 
             //Teclas especiais
             if (tecla == 224 || tecla == 0) {
                 tecla = _getch();
                 switch (tecla){
+                    //F1
                     case 59:
-                        printf("\nTecla F1 pressionada.\n");
-                        atualizar_cursor(15, 15);
                         break;
+                    //F2
                     case 60:
-                        printf("\nTecla F2 pressionada.\n");
                         break;
-                    case 61:
-                        printf("\nTecla F3 pressionada.\n");
-                        break;
-                    case 62:
-                        printf("\nTecla F4 pressionada.\n");
-                        break;
-                    case 63:
-                        printf("\nTecla F5 pressionada.\n");
-                        break;
-                    case 64:
-                        printf("\nTecla F6 pressionada.\n");
-                        break;
-                    case 65:
-                        printf("\nTecla F7 pressionada.\n");
-                        break;
-                    case 66:
-                        printf("\nTecla F8 pressionada.\n");
-                        break;
-                    case 67:
-                        printf("\nTecla F9 pressionada.\n");
-                        break;
+                    //F10
                     case 68:
-                        printf("\nTecla F10 pressionada.\n");
                         break;
+                    //F12
                     case 134:
-                        printf("\nTecla F12 pressionada.\n");
                         break;
+                    //SETA DIREITA
                     case 77:
-                        printf("\nSeta Direita");
+                        aumentar_x();
                         break;
+                    //SETA BAIXO
                     case 80:
-                        printf("\nSeta Baixo");
+                        aumentar_y();
                         break;
+                    //SETA ESQUERDA
                     case 75:
-                        printf("\nSeta Esquerda");
+                        diminuir_x();
                         break;
+                    //SETA CIMA
                     case 72:
-                        printf("\nSeta Cima");
+                        diminuir_y();
                         break;
+                    //INSERT
                     case 82:
-                        printf("\nInsert");
                         break;
+                    //DELETE
                     case 83:
-                        printf("\nDelete");
                         break;
+                    //END
                     case 79:
-                        printf("\nEnd");
                         break;
+                    //HOME
                     case 71:
-                        printf("\nHome");
+                        x = 0;
+                        atualizar_cursor(x, y);
                         break;
+                    //PAGEUP
                     case 73:
-                        printf("\nPageUP");
                         break;
+                    //PAGEDOWN
                     case 81:
-                        printf("\nPageDown");
                         break;
+                }
+            } else{
+
+                //BACKSPACE
+                if (tecla == 8) {
+                    printf("\b \b");
+                    diminuir_x();
+                }
+                //ESC
+                else if(tecla == 27){
+                    break;
+                }
+                //ENTER
+                else if(tecla == 13){
+                    y++;
+                    x = 1;
+                    atualizar_cursor(x, y);
+                }
+                else{
+                    printf("%c", tecla);
+                    aumentar_x();
                 }
             }
         }
