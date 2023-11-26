@@ -1,6 +1,17 @@
 #include <stdio.h>
 #include <conio.h>
 
+int x = 1, y = 1;
+
+// Função para posicionar o cursor na tela
+void gotoxy(int x, int y) {
+    printf("\033[%d;%dH", y, x);
+}
+
+void atualizar_cursor(int nx, int ny) {
+    gotoxy(nx, ny);
+}
+
 void monitoramento_teclas(){
     char entrada[256];  // Array para armazenar a entrada do usuário
     int posicao = 0, tecla;    // Posição atual na entrada
@@ -13,6 +24,11 @@ void monitoramento_teclas(){
             if (tecla == 27) {
                 printf("Tecla 'ESC' pressionada. Finalizando o programa.\n");
                 break;
+            }
+
+            if(tecla == 13){
+                y++;
+                atualizar_cursor(x, y);
             }
 
             //Backspace
@@ -32,6 +48,7 @@ void monitoramento_teclas(){
                 switch (tecla){
                     case 59:
                         printf("\nTecla F1 pressionada.\n");
+                        atualizar_cursor(15, 15);
                         break;
                     case 60:
                         printf("\nTecla F2 pressionada.\n");
@@ -100,5 +117,6 @@ void monitoramento_teclas(){
 }
 
 void main() {
+    gotoxy(x, y);
     monitoramento_teclas();
 }
