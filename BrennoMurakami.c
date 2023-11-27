@@ -117,15 +117,23 @@ void monitoramento_teclas(LISTA **lista){
                 //BACKSPACE
                 if (tecla == 8) {
                     if(x == 1){
-
+                        if(y > 1){
+                            q = retornar_no_anterior(*lista, y-1);
+                            remover_caractere_posicao(lista,y-2, q->tam);
+                            limpar_tela();
+                            exibir(*lista);
+                            x = q->tam+2;
+                            y--;
+                            atualizar_cursor(x, y);
+                        }
                     }
                     else{
-                        remover_caractere_posicao(lista,y-1, x);
-
+                        remover_caractere_posicao(lista,y-1, x-2);
+                        limpar_tela();
+                        exibir(*lista);
+                        diminuir_x();
                     }
-                    limpar_tela();
-                    exibir(*lista);
-                    diminuir_x();
+
                 }
                 //ESC
                 else if(tecla == 27){
@@ -133,6 +141,7 @@ void monitoramento_teclas(LISTA **lista){
                 }
                 //ENTER
                 else if(tecla == 13){
+                    inserir_caractere_posicao(lista,'\n', y-1, x-1);
                     y++;
                     x = 1;
                     criar_linha_posicao(lista, y-2);
@@ -140,6 +149,7 @@ void monitoramento_teclas(LISTA **lista){
                 }
                 else{
                     if(x == 90){
+                        inserir_caractere_posicao(lista,'\n', y-1, x-1);
                         if(q->next == NULL){
                             criar_linha_final(lista);
                             q = q->next;

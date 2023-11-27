@@ -35,7 +35,6 @@ void exibir(LISTA *lista){
             printf("%c", lista->linha[i]);
         }
         lista = lista->next;
-        printf("\n");
     }
 }
 
@@ -251,5 +250,15 @@ void remover_linha_posicao(LISTA **lista, int pos){
     }
 }
 
+LISTA *retornar_no_anterior(LISTA *lista, int no){
+    LISTA *q;
+    q = lista;
+    int i = 0;
+    while(i != no-1){
+        q = q->next;
+        i++;
+    }
+    return q;
+}
 
 #endif // BrennoMurakamiEstrutura
