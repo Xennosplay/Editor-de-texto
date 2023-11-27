@@ -77,11 +77,17 @@ void monitoramento_teclas(LISTA **lista){
                         break;
                     //SETA DIREITA
                     case 77:
-                        aumentar_x();
+                        q = retornar_no_atual(*lista, y-1);
+                        if(x < q->tam+2){
+                            aumentar_x();
+                        }
                         break;
                     //SETA BAIXO
                     case 80:
-                        aumentar_y();
+                        q = retornar_no_atual(*lista, y-1);
+                        if(q->next != NULL){
+                            aumentar_y();
+                        }
                         break;
                     //SETA ESQUERDA
                     case 75:
@@ -120,6 +126,7 @@ void monitoramento_teclas(LISTA **lista){
                         if(y > 1){
                             q = retornar_no_anterior(*lista, y-1);
                             remover_caractere_posicao(lista,y-2, q->tam);
+                            remover_linha_posicao(lista,y-1);
                             limpar_tela();
                             exibir(*lista);
                             x = q->tam+2;

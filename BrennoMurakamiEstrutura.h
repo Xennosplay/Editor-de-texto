@@ -261,4 +261,15 @@ LISTA *retornar_no_anterior(LISTA *lista, int no){
     return q;
 }
 
+LISTA *retornar_no_atual(LISTA *lista, int no){
+    LISTA *q;
+    q = lista;
+    int i = 0;
+    while(i != no){
+        q = q->next;
+        i++;
+    }
+    return q;
+}
+
 #endif // BrennoMurakamiEstrutura
