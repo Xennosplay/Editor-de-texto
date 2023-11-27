@@ -102,13 +102,22 @@ void monitoramento_teclas(LISTA **lista){
                         break;
                     //DELETE
                     case 83:
+                        remover_caractere_posicao(lista, y-1, x-1);
+                        limpar_tela();
+                        exibir(*lista);
+                        atualizar_cursor(x, y);
                         break;
                     //END
                     case 79:
+                        q = retornar_no_atual(*lista, y-1);
+                        x = q->tam+2;
+                        limpar_tela();
+                        exibir(*lista);
+                        atualizar_cursor(x, y);
                         break;
                     //HOME
                     case 71:
-                        x = 0;
+                        x = 1;
                         atualizar_cursor(x, y);
                         break;
                     //PAGEUP
