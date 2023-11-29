@@ -227,10 +227,22 @@ void monitoramento_teclas(LISTA **lista){
                 }
                 //ENTER
                 else if(tecla == 13){
-                    inserir_caractere_posicao(lista,'\n', y-1, x-1);
+                    q = retornar_no_atual(*lista, y-1);
+
+                    if(q->linha[q->tam] != '\n'){
+                        inserir_caractere_posicao(lista,'\n', y-1, x-1);
+                    }
+
+                    criar_linha_posicao(lista, y-1);
+
+                    q = q->next;
+                    if(q->next != NULL){
+                        inserir_caractere_posicao(lista,'\n', y, x-1);
+                    }
+                    limpar_tela();
+                    exibir(*lista);
                     y++;
                     x = 1;
-                    criar_linha_posicao(lista, y-2);
                     atualizar_cursor(x, y);
                 }
                 else{
