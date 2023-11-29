@@ -145,6 +145,7 @@ void criar_linha_comeco(LISTA **lista){
     }
 }
 
+//insere um no após a posição
 void criar_linha_posicao(LISTA **lista, int pos){
     LISTA *q, *aux;
     q = getnode();
@@ -287,6 +288,23 @@ void caracter_abaixo(LISTA **lista, int no, int pos){
         remover_linha_posicao(lista, j);
         j--;
     }
+}
+
+void caracter_abaixoo(LISTA **lista, char caracter, int no, int pos){
+    LISTA *q = *lista;
+
+}
+
+void caracter_acima(LISTA **lista, char caracter, int no, int pos){
+    LISTA *q = *lista;
+    int i = 0, j;
+    while(i != no - 1){
+        q = q->next;
+        i++;
+    }
+    q = q->next;
+
+
 }
 
 #endif // BrennoMurakamiEstrutura
