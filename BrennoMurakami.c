@@ -184,14 +184,22 @@ void monitoramento_teclas(LISTA **lista){
 
                                 int i = 0;
                                 while( i <= aux->tam){
-                                    if(aux->linha[i] != '\n' && q->tam < 90){
+                                    if(aux->linha[i] != '\n' && q->tam < 89){
                                         inserir_caractere_posicao(lista, aux->linha[i], y-2, q->tam);
                                     }
                                     i++;
                                 }
-                            }
 
-                            remover_linha_posicao(lista,y-1);
+                                while( i >= 0){
+                                    if(aux->linha[i] != '\n'){
+                                        remover_caractere_posicao(lista, y-1, i);
+                                    }
+                                    i--;
+                                }
+                            }
+                            if(aux->tam == -1 || aux->linha[0] == '\n'){
+                                remover_linha_posicao(lista,y-1);
+                            }
                             limpar_tela();
                             exibir(*lista);
 
@@ -226,7 +234,7 @@ void monitoramento_teclas(LISTA **lista){
                     atualizar_cursor(x, y);
                 }
                 else{
-                    if(x == 90){
+                    if(x >= 90){
                         q = retornar_no_atual(*lista, y-1);
 
                         if(q->linha[q->tam] != '\n'){

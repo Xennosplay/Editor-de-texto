@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 typedef struct lista{
-    char linha[90];
+    char linha[91];
     int tam;
     struct lista *next;
 }LISTA;
