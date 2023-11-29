@@ -1,0 +1,14 @@
+Pressione ESC para sair.
+
+F2: Salvar as informações contidas na estrutura de dados em um arquivo do
+tipo texto;
+
+F10: Abrir um arquivo do diretório;
+
+F12: Informações do Aluno;
+
+ESC:	i. Ser utilizada para sair da aplicação, podendo o usuário salvar em
+	arquivo as alterações realizadas antes do fechamento da aplicação;
+
+	ii. Após pressionar F12, a aplicação retornará para a tela principal 
+	com a tecla ESC.
