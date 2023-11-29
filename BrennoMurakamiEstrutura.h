@@ -2,6 +2,7 @@
 #define BrennoMurakamiEstrutura_H
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 
 typedef struct lista{
     char linha[91];
@@ -30,6 +31,7 @@ int empty(LISTA **lista){
 }
 
 void exibir(LISTA *lista){
+    setlocale(LC_ALL, "Portuguese");
     while(lista != NULL){
         for(int i = 0; i <= lista->tam; i++){
             printf("%c", lista->linha[i]);

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <conio.h>
+#include <locale.h>
 #include "BrennoMurakamiEstrutura.h"
 
 // Função para posicionar o cursor na tela
@@ -49,10 +50,13 @@ void aumentar_y(int *x, int *y){
 
 //Função para monitorar as teclas a todo momento, presos em um laço de repetição para capturar entradas a todo tempo
 void monitoramento_teclas(LISTA **lista, int *x, int *y){
+    setlocale(LC_ALL, "Portuguese");
     int tecla;
     LISTA *q, *aux;
     FILE *arquivo;
+    char nomeArquivo[40];
     int i, j;
+    int ins = 0;
     char c;
     do {
         if (_kbhit()) {
@@ -82,10 +86,9 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         break;
                     //F2
                     case 60:
-                        arquivo = ("saida.txt", "w");
+                        arquivo = fopen("BrennoMurakami.txt", "w");
 
                         q = retornar_no_atual(*lista, 0);
-                        system("pause");
 
                         // Verifica se o arquivo foi aberto com sucesso
                         if (arquivo == NULL) {
@@ -103,6 +106,48 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         break;
                     //F10
                     case 68:
+                        setlocale(LC_ALL, "Portuguese");
+                        limpar_tela();
+                        inicializar(lista);
+                        criar_linha_comeco(lista);
+                        q = *lista;
+                        i = 0;
+
+                        printf("Digite o nome do arquivo a ser lido: ");
+                        fflush(stdin);
+                        scanf("%[^\n]s", nomeArquivo);
+                        arquivo = fopen(nomeArquivo, "r");
+
+                        if(arquivo == NULL){
+                            printf("\nNão foi possível abrir o arquivo");
+                        }
+
+                        while((c = fgetc(arquivo)) != EOF){
+                            if(i == 89){
+                                q->linha[i] = c;
+                                q->tam++;
+                                q->linha[90] = '\n';
+                                q->tam++;
+                                criar_linha_final(lista);
+                                q = q->next;
+                                i = 0;
+                            }
+                            else if(c == '\n'){
+                                q->linha[i] = c;
+                                q->tam++;
+                                criar_linha_final(lista);
+                                q = q->next;
+                                i = 0;
+                            }
+                            else{
+                                q->linha[i] = c;
+                                q->tam++;
+                                i++;
+                            }
+
+                        }
+                        limpar_tela();
+                        exibir(*lista);
                         break;
                     //F12
                     //Função para aparecer as informações do aluno na tela, entrando em um looping que só finaliza quando o aluno aperta ESC
@@ -199,6 +244,12 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         break;
                     //INSERT
                     case 82:
+                        if(ins == 0){
+                            ins = 1;
+                        }
+                        else{
+                            ins = 0;
+                        }
                         break;
                     //DELETE
                     //Nesta função, é apagado o caractere que estiver à frente do cursor,
@@ -422,7 +473,15 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                             criar_linha_final(lista);
                         }
                     }
-                    inserir_caractere_posicao(lista, tecla, (*y)-1, (*x)-1);
+                    if(ins == 1){
+                        if((*x) < q->tam+2 && q->linha[(*x)-1] != '\n'){
+                            remover_caractere_posicao(lista, (*y)-1, (*x)-1);
+                        }
+                        inserir_caractere_posicao(lista, tecla, (*y)-1, (*x)-1);
+                    }
+                    else{
+                        inserir_caractere_posicao(lista, tecla, (*y)-1, (*x)-1);
+                    }
                     limpar_tela();
                     exibir(*lista);
                     aumentar_x(x, y);
@@ -437,9 +496,11 @@ void main() {
     int x, y;
     x = 1;
     y = 1;
+    setlocale(LC_ALL, "Portuguese");
     gotoxy(x, y);
 
     inicializar(&lista);
     criar_linha_comeco(&lista);
+    limpar_tela();
     monitoramento_teclas(&lista, &x, &y);
 }
