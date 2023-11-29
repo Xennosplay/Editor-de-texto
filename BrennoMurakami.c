@@ -48,9 +48,10 @@ void aumentar_y(int *x, int *y){
 }
 
 //Função para monitorar as teclas a todo momento, presos em um laço de repetição para capturar entradas a todo tempo
-void monitoramento_teclas(LISTA **lista, int *x, int *y, FILE *arquivo){
+void monitoramento_teclas(LISTA **lista, int *x, int *y){
     int tecla;
     LISTA *q, *aux;
+    FILE *arquivo;
     int i, j;
     char c;
     do {
@@ -81,6 +82,24 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y, FILE *arquivo){
                         break;
                     //F2
                     case 60:
+                        arquivo = ("saida.txt", "w");
+
+                        q = retornar_no_atual(*lista, 0);
+                        system("pause");
+
+                        // Verifica se o arquivo foi aberto com sucesso
+                        if (arquivo == NULL) {
+                            printf("\nErro ao criar o arquivo.\n");
+
+                        }
+
+                        while(q != NULL){
+                            for(i = 0; i <= q->tam; i++){
+                                fprintf(arquivo, "%c", q->linha[i]);
+                            }
+                            q = q->next;
+                        }
+                        fclose(arquivo);
                         break;
                     //F10
                     case 68:
@@ -415,7 +434,6 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y, FILE *arquivo){
 
 void main() {
     LISTA *lista;
-    FILE *arquivo;
     int x, y;
     x = 1;
     y = 1;
@@ -423,5 +441,5 @@ void main() {
 
     inicializar(&lista);
     criar_linha_comeco(&lista);
-    monitoramento_teclas(&lista, &x, &y, arquivo);
+    monitoramento_teclas(&lista, &x, &y);
 }
