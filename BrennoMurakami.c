@@ -44,16 +44,9 @@ void aumentar_y(){
     atualizar_cursor(x, y);
 }
 
-void diminuir_y(){
-    if(y > 1){
-        y--;
-    }
-    atualizar_cursor(x, y);
-}
-
 void monitoramento_teclas(LISTA **lista){
     int tecla;
-    LISTA *q;
+    LISTA *q, *aux;
     q = *lista;
     do {
         if (_kbhit()) {
@@ -78,24 +71,69 @@ void monitoramento_teclas(LISTA **lista){
                     //SETA DIREITA
                     case 77:
                         q = retornar_no_atual(*lista, y-1);
-                        if(x < q->tam+2){
+                        if(x < q->tam+2 && q->linha[x-1] != '\n'){
                             aumentar_x();
+                        }
+                        else{
+                            if(q->next != NULL){
+                                q = q->next;
+                                y++;
+                                x = 1;
+                                atualizar_cursor(x, y);
+                            }
                         }
                         break;
                     //SETA BAIXO
                     case 80:
                         q = retornar_no_atual(*lista, y-1);
                         if(q->next != NULL){
-                            aumentar_y();
+                            q = q->next;
+                            if(x-2 > q->tam){
+                                if(q->linha[q->tam] == '\n'){
+                                    x = q->tam+1;
+                                }
+                                else{
+                                    x = q->tam+2;
+                                }
+                            }
+                            y++;
+                            atualizar_cursor(x, y);
                         }
                         break;
                     //SETA ESQUERDA
                     case 75:
-                        diminuir_x();
+                        if(y > 1){
+                            q = retornar_no_anterior(*lista, y-1);
+                            if(x > 1){
+                            x--;
+                            }
+                            else{
+                                if(q->linha[q->tam] == '\n'){
+                                    x = q->tam+1;
+                                }
+                                else{
+                                    x = q->tam+2;
+                                }
+                                y--;
+                            }
+                        }
+                        else{
+                            if(x > 1){
+                                x--;
+                            }
+                        }
+                        atualizar_cursor(x, y);
                         break;
                     //SETA CIMA
                     case 72:
-                        diminuir_y();
+                        if(y > 1){
+                            q = retornar_no_anterior(*lista, y-1);
+                            if(x > q->tam+1){
+                                x = q->tam+1;
+                            }
+                            y--;
+                            atualizar_cursor(x, y);
+                        }
                         break;
                     //INSERT
                     case 82:
@@ -110,7 +148,13 @@ void monitoramento_teclas(LISTA **lista){
                     //END
                     case 79:
                         q = retornar_no_atual(*lista, y-1);
-                        x = q->tam+2;
+                        if(q->linha[q->tam] == '\n'){
+                            x = q->tam+1;
+                        }
+                        else{
+                            x = q->tam+2;
+                        }
+
                         limpar_tela();
                         exibir(*lista);
                         atualizar_cursor(x, y);
@@ -134,11 +178,20 @@ void monitoramento_teclas(LISTA **lista){
                     if(x == 1){
                         if(y > 1){
                             q = retornar_no_anterior(*lista, y-1);
-                            remover_caractere_posicao(lista,y-2, q->tam);
+                            if(q->linha[q->tam] != '\n'){
+                                remover_caractere_posicao(lista,y-2, q->tam);
+                            }
+
                             remover_linha_posicao(lista,y-1);
                             limpar_tela();
                             exibir(*lista);
-                            x = q->tam+2;
+
+                            if(q->linha[q->tam] != '\n'){
+                                x = q->tam+2;
+                            }
+                            else{
+                                x = q->tam+1;
+                            }
                             y--;
                             atualizar_cursor(x, y);
                         }
@@ -165,10 +218,17 @@ void monitoramento_teclas(LISTA **lista){
                 }
                 else{
                     if(x == 90){
-                        inserir_caractere_posicao(lista,'\n', y-1, x-1);
+                        q = retornar_no_atual(*lista, y-1);
+
+                        if(q->linha[q->tam] != '\n'){
+                            inserir_caractere_posicao(lista,'\n', y-1, x-1);
+                        }else{
+                            criar_linha_posicao(lista, y-1);
+                            inserir_caractere_posicao(lista, '\n', y, 0);
+                        }
+
                         if(q->next == NULL){
                             criar_linha_final(lista);
-                            q = q->next;
                         }
                     }
                     inserir_caractere_posicao(lista, tecla, y-1, x-1);

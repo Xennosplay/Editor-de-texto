@@ -272,4 +272,21 @@ LISTA *retornar_no_atual(LISTA *lista, int no){
     return q;
 }
 
+void caracter_abaixo(LISTA **lista, int no, int pos){
+    LISTA *q = *lista;
+    LISTA *aux = *lista;
+    int i = 0, j;
+    while(i != no){
+        q = q->next;
+        aux = aux->next;
+    }
+    aux = aux->next;
+    j = q->tam;
+    while(q->linha[j] != '\n'){
+        inserir_caractere_posicao(lista, q->linha[j], no+1, 0);
+        remover_linha_posicao(lista, j);
+        j--;
+    }
+}
+
 #endif // BrennoMurakamiEstrutura
