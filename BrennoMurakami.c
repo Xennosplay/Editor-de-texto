@@ -7,14 +7,17 @@ void gotoxy(int x, int y) {
     printf("\033[%d;%dH", y, x);
 }
 
+//Função para atualizar o cursor na tela
 void atualizar_cursor(int nx, int ny) {
     gotoxy(nx, ny);
 }
 
+//Função para limpar a tela
 void limpar_tela(){
     system("cls");
 }
 
+//Função para aumentar o x para a movimentação do cursor, neste caso, se x for ultrapassar o limite da tela, ele vai pra linha debaixo reiniciando a contagem
 void aumentar_x(int *x, int *y){
     if(*x < 90){
         (*x)++;
@@ -26,6 +29,7 @@ void aumentar_x(int *x, int *y){
     atualizar_cursor(*x, *y);
 }
 
+//inverso da função de aumentar o x
 void diminuir_x(int *x, int *y){
     if(*x > 1){
         (*x)--;
@@ -37,11 +41,13 @@ void diminuir_x(int *x, int *y){
     atualizar_cursor(*x, *y);
 }
 
+//Função para aumentar y, ou seja, incrementar y significa passar para a linha de baixo
 void aumentar_y(int *x, int *y){
     (*y)++;
     atualizar_cursor(*x, *y);
 }
 
+//Função para monitorar as teclas a todo momento, presos em um laço de repetição para capturar entradas a todo tempo
 void monitoramento_teclas(LISTA **lista, int *x, int *y){
     int tecla;
     LISTA *q, *aux;
@@ -67,6 +73,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                     case 134:
                         break;
                     //SETA DIREITA
+                    //Função para mover o cursor para frente, caso o cursor exceda o ultimo caracter, ele vai pro começo da linha de baixo(caso houver)
                     case 77:
                         q = retornar_no_atual(*lista, (*y)-1);
                         if(*x < q->tam+2 && q->linha[(*x)-1] != '\n'){
@@ -82,6 +89,8 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         }
                         break;
                     //SETA BAIXO
+                    //Função para mover o cursor para a linha de baixo caso houver, se a posição do cursor na linha exceder
+                    //o número de caracteres da linha de baixo, o x é setado para o último caractere desta linha.
                     case 80:
                         q = retornar_no_atual(*lista, (*y)-1);
                         if(q->next != NULL){
@@ -99,6 +108,8 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         }
                         break;
                     //SETA ESQUERDA
+                    //Função para mover o cursor para a esquerda, se houver uma linha acima e o cursor estiver no começo da tela
+                    //ele vai para o último caractere da linha de cima, caso o contrário, não acontece nada.
                     case 75:
                         if(*y > 1){
                             q = retornar_no_anterior(*lista, (*y)-1);
@@ -123,6 +134,8 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         atualizar_cursor(*x, *y);
                         break;
                     //SETA CIMA
+                    //Função para mover o cursor para cima, se o cursor da linha de baixo estiver numa posição acima da quantidade
+                    //dos caracteres da linha de cima, x é setado para o último caractere da linha de cima.
                     case 72:
                         if(*y > 1){
                             q = retornar_no_anterior(*lista, (*y)-1);
@@ -137,6 +150,8 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                     case 82:
                         break;
                     //DELETE
+                    //Nesta função, é apagado o caractere que estiver à frente do cursor,
+                    //e se o caractere for o último, todo o conteúdo de baixo vai para a linha de cima, vulgo onde o cursor está posicionado(se o vetor estiver cheio, ele para de puxar o resto).
                     case 83:
                         q = retornar_no_atual(*lista, (*y)-1);
                         if(q->linha[(*x)-1] != '\n'){
@@ -176,6 +191,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         atualizar_cursor(*x, *y);
                         break;
                     //END
+                    //Para a função END, o cursor é posicionado no último caractere sem ser o '\n' que representa a quebra de linha.
                     case 79:
                         q = retornar_no_atual(*lista, (*y)-1);
                         if(q->linha[q->tam] == '\n'){
@@ -190,6 +206,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         atualizar_cursor(*x, *y);
                         break;
                     //HOME
+                    //O cursor apenas é posicionado no começo da tela, não é necessária nenhuma validação, já que toda linha tem um começo;
                     case 71:
                         *x = 1;
                         atualizar_cursor(*x, *y);
@@ -204,6 +221,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
             } else{
 
                 //BACKSPACE
+                //Nesta função, a função apaga o caractere que antescede o cursor, neste caso em específico, se o cursor estiver no começo da linha, todo o conteúdo dela vai para a linha de cima.
                 if (tecla == 8) {
                     if(*x == 1){
                         if(*y > 1){
@@ -256,6 +274,8 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                     break;
                 }
                 //ENTER
+                //Função para inserir uma quebra de linha no final de cada linha, caso já ouver uma quebra de linha, cria um outro nó após o atual e coloca uma quebra de linha na primeira
+                //posição do nó criado, acompanhando o cursor para o novo nó para inserções
                 else if(tecla == 13){
                     q = retornar_no_atual(*lista, (*y)-1);
 
@@ -275,6 +295,8 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                     *x = 1;
                     atualizar_cursor(*x, *y);
                 }
+                //Se não for nenhuma das teclas acima, significa que é uma tecla de inserção padrão, neste caso armazena o caracter da estrutura, e se exceder o limite da tela/vetor
+                //cria outro nó e vai para a linha de baixo continuando a preencher os dados
                 else{
                     if(*x >= 90){
                         q = retornar_no_atual(*lista, (*y)-1);
