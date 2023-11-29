@@ -280,14 +280,34 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                     q = retornar_no_atual(*lista, (*y)-1);
 
                     if(q->linha[q->tam] != '\n'){
-                        inserir_caractere_posicao(lista,'\n', (*y)-1, (*x)-1);
+                        inserir_caractere_final(lista,'\n', (*y)-1);
+                    }
+                    else if(q->linha[q->tam] == '\n'){
                     }
 
                     criar_linha_posicao(lista, (*y)-1);
 
+                    if((*x)-1 < q->tam){
+                        i = (*x)-1;
+                        while(i < q->tam){
+                            if(q->linha[i] != '\n'){
+                                inserir_caractere_final(lista, q->linha[i], *y);
+                            }
+                            i++;
+                        }
+
+                        while(i >= (*x)-1){
+                            if(q->linha[i] != '\n'){
+                                remover_caractere_posicao(lista, (*y)-1, (*x)-1);
+                            }
+                            i--;
+                        }
+                    }
+
+
                     q = q->next;
                     if(q->next != NULL){
-                        inserir_caractere_posicao(lista,'\n', *y, (*x)-1);
+                        inserir_caractere_final(lista,'\n', *y);
                     }
                     limpar_tela();
                     exibir(*lista);
