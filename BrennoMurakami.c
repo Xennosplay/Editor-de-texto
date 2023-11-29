@@ -45,7 +45,7 @@ void aumentar_y(int *x, int *y){
 void monitoramento_teclas(LISTA **lista, int *x, int *y){
     int tecla;
     LISTA *q, *aux;
-    q = *lista;
+    int i, j;
     do {
         if (_kbhit()) {
             tecla = _getch();
@@ -142,8 +142,33 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         if(q->linha[(*x)-1] != '\n'){
                             remover_caractere_posicao(lista, (*y)-1, (*x)-1);
                         }
-                        else{
+                        else if(q->next != NULL){
+                            aux = retornar_no_atual(*lista, (*y)-1);
+                            aux = aux->next;
+                            i = 0;
+                            while(q->tam < 89 && i <= aux->tam){
+                                if(aux->linha[i] != '\n'){
+                                    inserir_caractere_posicao(lista, aux->linha[i],(*y)-1, q->tam);
+                                }
+                                i++;
+                            }
 
+                            if(aux->tam == -1 || aux->linha[0] == '\n'){
+                                remover_linha_posicao(lista, *y);
+                            }
+                            else{
+                                while(i >= 0){
+                                    if(aux->linha[i] != '\n'){
+                                        remover_caractere_posicao(lista, *y, i);
+                                    }
+                                    i--;
+                                }
+                            }
+                        }
+                        else{
+                            if((*x)-1 != aux->tam){
+                                remover_caractere_posicao(lista, (*y)-1, (*x)-1);
+                            }
                         }
 
                         limpar_tela();
@@ -187,7 +212,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
 
                             if(aux->tam > -1){
 
-                                int i = 0;
+                                i = 0;
                                 while( i <= aux->tam && q->tam < 89){
                                     if(aux->linha[i] != '\n'){
                                         inserir_caractere_posicao(lista, aux->linha[i], (*y)-2, q->tam);
