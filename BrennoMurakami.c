@@ -154,7 +154,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                     //e se o caractere for o último, todo o conteúdo de baixo vai para a linha de cima, vulgo onde o cursor está posicionado(se o vetor estiver cheio, ele para de puxar o resto).
                     case 83:
                         q = retornar_no_atual(*lista, (*y)-1);
-                        if(q->linha[(*x)-1] != '\n'){
+                        if(q->linha[(*x)-1] != '\n' && (*x)-1 < q->tam){
                             remover_caractere_posicao(lista, (*y)-1, (*x)-1);
                         }
                         else if(q->next != NULL){
