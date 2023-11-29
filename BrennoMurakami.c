@@ -48,10 +48,11 @@ void aumentar_y(int *x, int *y){
 }
 
 //Função para monitorar as teclas a todo momento, presos em um laço de repetição para capturar entradas a todo tempo
-void monitoramento_teclas(LISTA **lista, int *x, int *y){
+void monitoramento_teclas(LISTA **lista, int *x, int *y, FILE *arquivo){
     int tecla;
     LISTA *q, *aux;
     int i, j;
+    char c;
     do {
         if (_kbhit()) {
             tecla = _getch();
@@ -61,7 +62,22 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                 tecla = _getch();
                 switch (tecla){
                     //F1
+                    //Função para imprimir o arquivo de ajuda, e após imprimir entra num looping que só sai quando o usuário pressiona ESC
                     case 59:
+                        limpar_tela();
+                        arquivo = fopen("BrennoMurakami_ajuda.txt", "r");
+                        while((c = fgetc(arquivo)) != EOF){
+                            printf("%c", c);
+                        }
+                        j = 0;
+                        do{
+                            tecla = _getch();
+                            if(tecla == 27){
+                                j = 1;
+                            }
+                        }while(j != 1);
+                        limpar_tela();
+                        exibir(*lista);
                         break;
                     //F2
                     case 60:
@@ -399,6 +415,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
 
 void main() {
     LISTA *lista;
+    FILE *arquivo;
     int x, y;
     x = 1;
     y = 1;
@@ -406,5 +423,5 @@ void main() {
 
     inicializar(&lista);
     criar_linha_comeco(&lista);
-    monitoramento_teclas(&lista, &x, &y);
+    monitoramento_teclas(&lista, &x, &y, arquivo);
 }
