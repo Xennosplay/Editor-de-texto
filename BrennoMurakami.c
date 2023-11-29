@@ -212,10 +212,30 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         atualizar_cursor(*x, *y);
                         break;
                     //PAGEUP
+                    //Função retorna o nó atual e percorre até o primeiro nó ou até o i incrementar 25 vezes, depois se o nó inicial estiver maior que o número
+                    //de caracteres que a linha de destino, o x é setado para o último caracter do nó de destino
                     case 73:
+                        i = 0;
+                        while(*y > 1 && i < 25){
+                            i++;
+                            (*y)--;
+                        }
+                        q = retornar_no_atual(*lista, (*y)-1);
+
+                        if(*x > q->tam+2){
+                            if(q->linha[q->tam] == '\n'){
+                                *x = q->tam+1;
+                            }
+                            else{
+                                *x = q->tam+2;
+                            }
+                        }
+                        atualizar_cursor(*x, *y);
 
                         break;
                     //PAGEDOWN
+                    //Função retorna o nó atual e percorre até o último nó ou até o i incrementar 25 vezes, depois se o nó inicial estiver maior que o número
+                    //de caracteres que a linha de destino, o x é setado para o último caracter do nó de destino
                     case 81:
                         q = retornar_no_atual(*lista, (*y)-1);
                         i = 0;
