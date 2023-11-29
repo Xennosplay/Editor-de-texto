@@ -90,12 +90,6 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
 
                         q = retornar_no_atual(*lista, 0);
 
-                        // Verifica se o arquivo foi aberto com sucesso
-                        if (arquivo == NULL) {
-                            printf("\nErro ao criar o arquivo.\n");
-
-                        }
-
                         while(q != NULL){
                             for(i = 0; i <= q->tam; i++){
                                 fprintf(arquivo, "%c", q->linha[i]);
@@ -167,6 +161,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         }while(j != 1);
                         limpar_tela();
                         exibir(*lista);
+                        atualizar_cursor(*x, *y);
                         break;
                     //SETA DIREITA
                     //Função para mover o cursor para frente, caso o cursor exceda o ultimo caracter, ele vai pro começo da linha de baixo(caso houver)
@@ -360,7 +355,6 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         break;
                 }
             } else{
-
                 //BACKSPACE
                 //Nesta função, a função apaga o caractere que antescede o cursor, neste caso em específico, se o cursor estiver no começo da linha, todo o conteúdo dela vai para a linha de cima.
                 if (tecla == 8) {
@@ -412,6 +406,31 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                 }
                 //ESC
                 else if(tecla == 27){
+                    do{
+                        limpar_tela();
+                        printf("\nDeseja salvar as informações antes de sair?");
+                        printf("\n[S] / [N]: ");
+                        scanf("%c", &c);
+                        if(c == 'S' || c == 's'){
+                            arquivo = fopen("BrennoMurakami.txt", "w");
+                            q = retornar_no_atual(*lista, 0);
+
+                            while(q != NULL){
+                                for(i = 0; i <= q->tam; i++){
+                                    fprintf(arquivo, "%c", q->linha[i]);
+                                }
+                                q = q->next;
+                            }
+                            fclose(arquivo);
+                        }
+                        else if(c == 'N' || 'n'){
+                        }
+                        else{
+                            printf("\nDigite algo valido");
+                        }
+                    }while(c != 'S' && c!= 's' && c != 'N' && c != 'n');
+                    limpar_tela();
+                    printf("\nPrograma encerrado");
                     break;
                 }
                 //ENTER
