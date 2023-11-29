@@ -213,9 +213,28 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         break;
                     //PAGEUP
                     case 73:
+
                         break;
                     //PAGEDOWN
                     case 81:
+                        q = retornar_no_atual(*lista, (*y)-1);
+                        i = 0;
+                        while(q->next != NULL && i < 25){
+                            q = q->next;
+                            i++;
+                            (*y)++;
+                        }
+
+                        if(*x > q->tam+2){
+                            if(q->linha[q->tam] == '\n'){
+                                *x = q->tam+1;
+                            }
+                            else{
+                                *x = q->tam+2;
+                            }
+
+                        }
+                        atualizar_cursor(*x, *y);
                         break;
                 }
             } else{
