@@ -70,7 +70,23 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                     case 68:
                         break;
                     //F12
+                    //Função para aparecer as informações do aluno na tela, entrando em um looping que só finaliza quando o aluno aperta ESC
                     case 134:
+                        limpar_tela();
+                        printf("[ESC] - Voltar");
+                        printf("\n\nNome: Brenno Murakami");
+                        printf("\nProntuario: PE3008983");
+                        printf("\nCurso: Bacharelado em Ciencia da Computacao - IFSP P. Epitacio");
+                        printf("\nAno de Ingresso: 2020");
+                        j = 0;
+                        do{
+                            tecla = _getch();
+                            if(tecla == 27){
+                                j = 1;
+                            }
+                        }while(j != 1);
+                        limpar_tela();
+                        exibir(*lista);
                         break;
                     //SETA DIREITA
                     //Função para mover o cursor para frente, caso o cursor exceda o ultimo caracter, ele vai pro começo da linha de baixo(caso houver)
