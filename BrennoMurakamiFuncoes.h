@@ -86,4 +86,21 @@ void salvar_arquivo(LISTA *q){
     fclose(arquivo);
 }
 
+void dados_aluno(){
+    int j = 0, tecla;
+    limpar_tela();
+    printf("[ESC] - Voltar");
+    printf("\n\nNome: Brenno Murakami");
+    printf("\nProntuario: PE3008983");
+    printf("\nCurso: Bacharelado em Ciencia da Computacao - IFSP P. Epitacio");
+    printf("\nAno de Ingresso: 2020");
+    do{
+        tecla = _getch();
+        if(tecla == 27){
+            j = 1;
+        }
+    }while(j != 1);
+    limpar_tela();
+}
+
 #endif // BrennoMurakamiFuncoes
