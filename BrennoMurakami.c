@@ -31,17 +31,8 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         break;
                     //F2
                     case 60:
-                        arquivo = fopen("BrennoMurakami.txt", "w");
-
                         q = retornar_no_atual(*lista, 0);
-
-                        while(q != NULL){
-                            for(i = 0; i <= q->tam; i++){
-                                fprintf(arquivo, "%c", q->linha[i]);
-                            }
-                            q = q->next;
-                        }
-                        fclose(arquivo);
+                        salvar_arquivo(q);
                         break;
                     //F10
                     case 68:
@@ -357,25 +348,18 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         printf("\n[S] / [N]: ");
                         scanf("%c", &c);
                         if(c == 'S' || c == 's'){
-                            arquivo = fopen("BrennoMurakami.txt", "w");
                             q = retornar_no_atual(*lista, 0);
-
-                            while(q != NULL){
-                                for(i = 0; i <= q->tam; i++){
-                                    fprintf(arquivo, "%c", q->linha[i]);
-                                }
-                                q = q->next;
-                            }
-                            fclose(arquivo);
+                            salvar_arquivo(q);
+                            limpar_tela();
+                            printf("\nArquivo Salvo, encerrando o programa");
                         }
                         else if(c == 'N' || 'n'){
+                            printf("\nPrograma encerrado.");
                         }
                         else{
                             printf("\nDigite algo valido");
                         }
                     }while(c != 'S' && c!= 's' && c != 'N' && c != 'n');
-                    limpar_tela();
-                    printf("\nPrograma encerrado");
                     break;
                 }
                 //ENTER

@@ -72,4 +72,18 @@ void printarArquivo(){
     limpar_tela();
 }
 
+void salvar_arquivo(LISTA *q){
+    FILE *arquivo;
+    int i;
+    arquivo = fopen("BrennoMurakami.txt", "w");
+
+    while(q != NULL){
+        for(i = 0; i <= q->tam; i++){
+            fprintf(arquivo, "%c", q->linha[i]);
+        }
+        q = q->next;
+    }
+    fclose(arquivo);
+}
+
 #endif // BrennoMurakamiFuncoes
