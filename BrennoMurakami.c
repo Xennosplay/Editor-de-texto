@@ -26,19 +26,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                     //F1
                     //Função para imprimir o arquivo de ajuda, e após imprimir entra num looping que só sai quando o usuário pressiona ESC
                     case 59:
-                        limpar_tela();
-                        arquivo = fopen("BrennoMurakami_ajuda.txt", "r");
-                        while((c = fgetc(arquivo)) != EOF){
-                            printf("%c", c);
-                        }
-                        j = 0;
-                        do{
-                            tecla = _getch();
-                            if(tecla == 27){
-                                j = 1;
-                            }
-                        }while(j != 1);
-                        limpar_tela();
+                        printarArquivo();
                         exibir(*lista);
                         break;
                     //F2

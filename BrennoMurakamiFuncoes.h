@@ -50,4 +50,26 @@ void aumentar_y(int *x, int *y){
     atualizar_cursor(*x, *y);
 }
 
+void printarArquivo(){
+    FILE *arquivo;
+    char c;
+    int tecla;
+    int j = 0;
+
+    limpar_tela();
+    arquivo = fopen("BrennoMurakami_ajuda.txt", "r");
+
+    while((c = fgetc(arquivo)) != EOF){
+        printf("%c", c);
+    }
+
+    do{
+        tecla = _getch();
+        if(tecla == 27){
+            j = 1;
+        }
+    }while(j != 1);
+    limpar_tela();
+}
+
 #endif // BrennoMurakamiFuncoes
