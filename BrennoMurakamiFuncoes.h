@@ -86,6 +86,12 @@ void salvar_arquivo(LISTA *q){
     fclose(arquivo);
 }
 
+void limpar_estrutura(LISTA **lista){
+    while(!empty(lista)){
+        remover_linha_comeco(lista);
+    }
+}
+
 void dados_aluno(){
     int j = 0, tecla;
     limpar_tela();

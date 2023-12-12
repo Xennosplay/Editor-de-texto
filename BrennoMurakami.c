@@ -18,10 +18,10 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
     do {
         if (_kbhit()) {
             tecla = _getch();
-
             //Teclas especiais
             if (tecla == 224 || tecla == 0) {
                 tecla = _getch();
+
                 switch (tecla){
                     //F1
                     //Função para imprimir o arquivo de ajuda, e após imprimir entra num looping que só sai quando o usuário pressiona ESC
@@ -38,46 +38,51 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                     case 68:
                         setlocale(LC_ALL, "Portuguese");
                         limpar_tela();
-                        inicializar(lista);
-                        criar_linha_comeco(lista);
-                        q = *lista;
-                        i = 0;
 
                         printf("Digite o nome do arquivo a ser lido: ");
                         fflush(stdin);
                         scanf("%[^\n]s", nomeArquivo);
                         arquivo = fopen(nomeArquivo, "r");
 
-                        if(arquivo == NULL){
-                            printf("\nNão foi possível abrir o arquivo");
+                        if(arquivo != NULL){
+                            limpar_estrutura(lista);
+                            inicializar(lista);
+                            criar_linha_comeco(lista);
+                            q = *lista;
+                            i = 0;
+                            while((c = fgetc(arquivo)) != EOF){
+                                if(i == 89){
+                                    q->linha[i] = c;
+                                    q->tam++;
+                                    q->linha[90] = '\n';
+                                    q->tam++;
+                                    criar_linha_final(lista);
+                                    q = q->next;
+                                    i = 0;
+                                }
+                                else if(c == '\n'){
+                                    q->linha[i] = c;
+                                    q->tam++;
+                                    criar_linha_final(lista);
+                                    q = q->next;
+                                    i = 0;
+                                }
+                                else{
+                                    q->linha[i] = c;
+                                    q->tam++;
+                                    i++;
+                                }
+
+                            }
                         }
-
-                        while((c = fgetc(arquivo)) != EOF){
-                            if(i == 89){
-                                q->linha[i] = c;
-                                q->tam++;
-                                q->linha[90] = '\n';
-                                q->tam++;
-                                criar_linha_final(lista);
-                                q = q->next;
-                                i = 0;
-                            }
-                            else if(c == '\n'){
-                                q->linha[i] = c;
-                                q->tam++;
-                                criar_linha_final(lista);
-                                q = q->next;
-                                i = 0;
-                            }
-                            else{
-                                q->linha[i] = c;
-                                q->tam++;
-                                i++;
-                            }
-
+                        else{
+                            limpar_tela();
+                            printf("Arquivo inexistente.\n");
+                            system("pause");
                         }
                         limpar_tela();
                         exibir(*lista);
+                        atualizar_cursor(*x,*y);
                         break;
                     //F12
                     //Função para aparecer as informações do aluno na tela, entrando em um looping que só finaliza quando o aluno aperta ESC
@@ -204,7 +209,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                             }
                         }
                         else{
-                            if((*x)-1 != aux->tam){
+                            if((*x)-1 != q->tam+1){
                                 remover_caractere_posicao(lista, (*y)-1, (*x)-1);
                             }
                         }
@@ -401,7 +406,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                 }
                 //Se não for nenhuma das teclas acima, significa que é uma tecla de inserção padrão, neste caso armazena o caracter da estrutura, e se exceder o limite da tela/vetor
                 //cria outro nó e vai para a linha de baixo continuando a preencher os dados
-                else{
+                else if(tecla >= 32 && tecla <= 126){
                     if(*x >= 90){
                         q = retornar_no_atual(*lista, (*y)-1);
 
