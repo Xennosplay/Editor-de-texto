@@ -22,7 +22,6 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
             //Teclas especiais
             if (tecla == 224 || tecla == 0) {
                 tecla = _getch();
-
                 switch (tecla){
                     //F1
                     //Função para imprimir o arquivo de ajuda, e após imprimir entra num looping que só sai quando o usuário pressiona ESC
@@ -407,6 +406,19 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                     exibir(*lista);
                     (*y)++;
                     *x = 1;
+                    atualizar_cursor(*x, *y);
+                }
+                //TAB
+                else if(tecla == 9){
+                    q = retornar_no_atual(lista, (*y)-1);
+                    i = 0;
+                    while((*x)-1 < 89 && i <= 1){
+                        inserir_caractere_posicao(lista, ' ', (*y)-1, *(x)-1);
+                        aumentar_x(x, y);
+                        i++;
+                    }
+                    limpar_tela();
+                    exibir(*lista);
                     atualizar_cursor(*x, *y);
                 }
                 //Se não for nenhuma das teclas acima, significa que é uma tecla de inserção padrão, neste caso armazena o caracter da estrutura, e se exceder o limite da tela/vetor
