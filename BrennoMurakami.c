@@ -198,6 +198,9 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                                     }
                                     i--;
                                 }
+                                if(aux->tam == -1 || aux->linha[0] == '\n'){
+                                    remover_linha_posicao(lista, *y);
+                                }
                             }
                         }
                         else{
@@ -332,7 +335,6 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         exibir(*lista);
                         diminuir_x(x, y);
                     }
-
                 }
                 //ESC
                 else if(tecla == 27){
@@ -386,7 +388,6 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                             i--;
                         }
                     }
-
 
                     q = q->next;
                     if(q->next != NULL){
