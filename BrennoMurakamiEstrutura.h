@@ -99,10 +99,12 @@ void remover_caractere_posicao(LISTA **lista, int no, int pos){
         q = q->next;
         i++;
     }
-    for(int j = pos; j < q->tam; j++){
-        q->linha[j] = q->linha[j+1];
+    if(q->tam >= 0){
+        for(int j = pos; j < q->tam; j++){
+            q->linha[j] = q->linha[j+1];
+        }
+        q->tam--;
     }
-    q->tam--;
 }
 
 void remover_caractere_comeco(LISTA **lista, int no){
@@ -112,10 +114,13 @@ void remover_caractere_comeco(LISTA **lista, int no){
     while(i != no){
         q = q->next;
     }
-    for(int j = 0; j < q->tam; j++){
-        q->linha[j] = q->linha[j+1];
+    if(q->tam >= 0){
+        for(int j = 0; j < q->tam; j++){
+            q->linha[j] = q->linha[j+1];
+        }
+        q->tam--;
     }
-    q->tam--;
+
 }
 
 void remover_caractere_final(LISTA **lista, int no){
@@ -125,7 +130,9 @@ void remover_caractere_final(LISTA **lista, int no){
     while(i != no){
         q = q->next;
     }
-    q->tam--;
+    if(q->tam >= 0){
+        q->tam--;
+    }
 }
 
 void criar_linha_comeco(LISTA **lista){

@@ -8,7 +8,7 @@
 //Função para monitorar as teclas a todo momento, presos em um laço de repetição para capturar entradas a todo tempo
 void monitoramento_teclas(LISTA **lista, int *x, int *y){
     setlocale(LC_ALL, "Portuguese");
-    int tecla;
+    int tecla, backspace = 0;
     LISTA *q, *aux;
     FILE *arquivo;
     char nomeArquivo[40];
@@ -287,13 +287,13 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                             aux = retornar_no_atual(*lista, (*y)-1);
 
                             if(aux->tam > -1){
-
                                 i = 0;
                                 while( i <= aux->tam && q->tam < 89){
                                     if(aux->linha[i] != '\n'){
                                         inserir_caractere_posicao(lista, aux->linha[i], (*y)-2, q->tam);
                                     }
                                     i++;
+                                    backspace++;
                                 }
 
                                 while( i >= 0){
@@ -310,13 +310,20 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                             exibir(*lista);
 
                             if(q->linha[q->tam] != '\n'){
-                                *x = q->tam+2;
+                                *x = q->tam+2 - backspace;
                             }
                             else{
-                                *x = q->tam+1;
+                                *x = q->tam+1 - backspace;
                             }
+                            backspace = 0;
                             (*y)--;
                             atualizar_cursor(*x, *y);
+//                            limpar_tela();
+//                            for(int i = 0; i <= aux->tam; i++){
+//                                printf("%c", aux->linha[i]);
+//                            }
+//                            printf("\n\n\n");
+//                            system("pause");
                         }
                     }
                     else{
