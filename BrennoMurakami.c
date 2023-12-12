@@ -410,7 +410,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                 }
                 //TAB
                 else if(tecla == 9){
-                    q = retornar_no_atual(lista, (*y)-1);
+                    q = retornar_no_atual(*lista, (*y)-1);
                     i = 0;
                     while((*x)-1 < 89 && i <= 1){
                         inserir_caractere_posicao(lista, ' ', (*y)-1, *(x)-1);
@@ -439,6 +439,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         }
                     }
                     if(ins == 1){
+                        q = retornar_no_atual(*lista, (*y)-1);
                         if((*x) < q->tam+2 && q->linha[(*x)-1] != '\n'){
                             remover_caractere_posicao(lista, (*y)-1, (*x)-1);
                         }
