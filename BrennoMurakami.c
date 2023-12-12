@@ -9,6 +9,7 @@
 void monitoramento_teclas(LISTA **lista, int *x, int *y){
     setlocale(LC_ALL, "Portuguese");
     int tecla, backspace = 0;
+    int linha_criada = 0;
     LISTA *q, *aux;
     FILE *arquivo;
     char nomeArquivo[40];
@@ -48,6 +49,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                             limpar_estrutura(lista);
                             inicializar(lista);
                             criar_linha_comeco(lista);
+                            linha_criada = 1;
                             q = *lista;
                             i = 0;
                             while((c = fgetc(arquivo)) != EOF){
@@ -57,6 +59,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                                     q->linha[90] = '\n';
                                     q->tam++;
                                     criar_linha_final(lista);
+                                    linha_criada++;
                                     q = q->next;
                                     i = 0;
                                 }
@@ -64,6 +67,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                                     q->linha[i] = c;
                                     q->tam++;
                                     criar_linha_final(lista);
+                                    linha_criada++;
                                     q = q->next;
                                     i = 0;
                                 }
@@ -72,8 +76,9 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                                     q->tam++;
                                     i++;
                                 }
-
                             }
+                            *x = q->tam+2;
+                            *y = linha_criada;
                         }
                         else{
                             limpar_tela();
