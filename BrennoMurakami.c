@@ -52,9 +52,8 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                             q = *lista;
                             i = 0;
                             while((c = fgetc(arquivo)) != EOF){
-                                if(i == 89){
-                                    q->linha[i] = c;
-                                    q->tam++;
+
+                                if(i == 90 && c != '\n'){
                                     q->linha[90] = '\n';
                                     q->tam++;
                                     criar_linha_final(lista);
