@@ -94,7 +94,7 @@ void limpar_estrutura(LISTA **lista){
 
 void descer_caracteres(LISTA **lista, int no, char caractere, int pos){
     LISTA *q, *aux, *anterior;
-    int i=0,j=0;
+    int i=0,j=0, k = 0;
     q = *lista;
     aux = *lista;
     anterior = *lista;
@@ -109,8 +109,24 @@ void descer_caracteres(LISTA **lista, int no, char caractere, int pos){
         i++;
     }
 
-    if(aux->next == NULL && aux->tam > 89)
+    if(aux->next == NULL && aux->tam == 90)
     {
+        if(aux->linha[90] != '\n'){
+            aux->linha[90] = '\n';
+        }
+//        if(aux->linha[89] != 'a'){
+//            printf(" 89 - %c",);
+//        }
+//        else{
+//            printf(" 89 - tem a");
+//        }
+//        printf(" 89 - %c", aux->linha[89]);
+//            printf("Tamanho - %d", aux->tam);
+//        system("pause");
+//        if(aux->linha[90] != '\n' && aux->linha[89] != '\n'){
+//            aux->linha[90] = '\n';
+//            aux->tam++;
+//        }
         criar_linha_final(lista);
         aux = aux->next;
         i++;
@@ -126,6 +142,7 @@ void descer_caracteres(LISTA **lista, int no, char caractere, int pos){
        i--;
        j = 0;
     }
+    inserir_caractere_posicao(lista, caractere, no, pos);
 }
 
 void dados_aluno(){

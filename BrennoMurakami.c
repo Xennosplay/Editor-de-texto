@@ -448,7 +448,9 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         q = retornar_no_atual(*lista, (*y)-1);
                         if((*x) < q->tam+2 && q->tam == 90){
                             descer_caracteres(lista, (*y)-1, tecla, (*x)-1);
-                            inserir_caractere_posicao(lista, tecla, (*y)-1, (*x)-1);
+//                            inserir_caractere_posicao(lista, tecla, (*y)-1, (*x)-1);
+//                            printf(" TAMANHO - %d", q->tam);
+//                            system("pause");
                         }
                         else{
                             inserir_caractere_posicao(lista, tecla, (*y)-1, (*x)-1);
