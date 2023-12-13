@@ -92,6 +92,30 @@ void limpar_estrutura(LISTA **lista){
     }
 }
 
+void descer_caracteres(LISTA **lista, int no, char caractere, int pos){
+    LISTA *q, *aux;
+    int i = 0;
+    q = *lista;
+    while(i < no){
+        q = q->next;
+        i++;
+    }
+    aux = q->next;
+    remover_caractere_posicao(lista, no, q->tam-1);
+    inserir_caractere_posicao(lista, caractere, no, pos);
+
+    if(aux->tam <= 89){
+        inserir_caractere_comeco(lista, q->linha[q->tam-1], no+1);
+    }
+    else{
+
+    }
+//    limpar_tela();
+//    printf("%d", q->tam);
+//    system("pause");
+
+}
+
 void dados_aluno(){
     int j = 0, tecla;
     limpar_tela();
