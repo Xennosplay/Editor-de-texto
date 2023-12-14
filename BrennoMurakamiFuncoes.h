@@ -26,7 +26,10 @@ void terminal(){
 
 // Função para posicionar o cursor na tela
 void gotoxy(int x, int y) {
-    printf("\033[%d;%dH", y, x);
+    COORD coord;
+    coord.X = x - 1;
+    coord.Y = y - 1;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
 //Função para atualizar o cursor na tela
