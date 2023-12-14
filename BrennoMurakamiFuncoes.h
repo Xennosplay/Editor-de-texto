@@ -3,6 +3,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <windows.h>
+
+void terminal(){
+    // Obter o identificador da janela do console
+    HWND consoleWindow = GetConsoleWindow();
+
+    // Desativar o redimensionamento manual da tela
+    SetWindowLongPtr(consoleWindow, GWL_STYLE, GetWindowLongPtr(consoleWindow, GWL_STYLE) & ~WS_THICKFRAME);
+
+    // Obter o identificador do console
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    // Obter as informações do buffer de tela
+    CONSOLE_SCREEN_BUFFER_INFO bufferInfo;
+    GetConsoleScreenBufferInfo(hConsole, &bufferInfo);
+
+    // Aumentar o buffer de linha para 1000
+    COORD newSize = { bufferInfo.dwSize.X, 1000};
+    SetConsoleScreenBufferSize(hConsole, newSize);
+}
 
 // Função para posicionar o cursor na tela
 void gotoxy(int x, int y) {

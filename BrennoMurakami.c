@@ -506,11 +506,12 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
 void main() {
     LISTA *lista;
     int x, y;
+    terminal();
     x = 1;
     y = 1;
     setlocale(LC_ALL, "Portuguese");
+    terminal();
     gotoxy(x, y);
-
     inicializar(&lista);
     criar_linha_comeco(&lista);
     limpar_tela();
