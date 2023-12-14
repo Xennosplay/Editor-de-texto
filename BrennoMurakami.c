@@ -438,7 +438,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                     if(*x == 90){
                         q = retornar_no_atual(*lista, (*y)-1);
 
-                        if(q->linhaa[q->tam] != '\n'){
+                        if(q->linha[q->tam] != '\n'){
                             inserir_caractere_posicao(lista,'\n', (*y)-1, (*x)-1);
                         }else{
                             criar_linha_posicao(lista, (*y)-1);
@@ -476,7 +476,6 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                             if((*x) < q->tam+2 && q->tam == 90){
 //                                system("pause");
                                 descer_caracteres(lista, (*y), tecla, 0);
-                                inserir_caractere_comeco(lista, tecla, *y);
                             }
                             else{
                                 inserir_caractere_comeco(lista, tecla, *y);
