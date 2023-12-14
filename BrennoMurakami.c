@@ -28,6 +28,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                     case 59:
                         printarArquivo();
                         exibir(*lista);
+                        atualizar_cursor(*x, *y);
                         break;
                     //F2
                     case 60:
@@ -337,7 +338,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                             atualizar_cursor(*x, *y);
                         }
                     }
-                    else{
+                    else if(*x != 1){
                         remover_caractere_posicao(lista,(*y)-1, (*x)-2);
                         limpar_tela();
                         exibir(*lista);
