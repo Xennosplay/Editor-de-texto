@@ -292,11 +292,17 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                 //BACKSPACE
                 //Nesta função, a função apaga o caractere que antescede o cursor, neste caso em específico, se o cursor estiver no começo da linha, todo o conteúdo dela vai para a linha de cima.
                 if (tecla == 8) {
-                    if(*x == 1){
-                        if(*y > 1){
-                            q = retornar_no_anterior(*lista, (*y)-1);
-                            aux = retornar_no_atual(*lista, (*y)-1);
-
+                    if(*x == 1 && *y > 1){
+                        q = retornar_no_anterior(*lista, (*y)-1);
+                        aux = retornar_no_atual(*lista, (*y)-1);
+                        if(q->tam == 90){
+                            (*y)--;
+                            *x = 92;
+                            limpar_tela();
+                            exibir(*lista);
+                            diminuir_x(x, y);
+                        }
+                        else{
                             if(aux->tam > -1){
                                 i = 0;
                                 while( i <= aux->tam && q->tam < 89){
@@ -329,12 +335,6 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                             backspace = 0;
                             (*y)--;
                             atualizar_cursor(*x, *y);
-//                            limpar_tela();
-//                            for(int i = 0; i <= aux->tam; i++){
-//                                printf("%c", aux->linha[i]);
-//                            }
-//                            printf("\n\n\n");
-//                            system("pause");
                         }
                     }
                     else{
