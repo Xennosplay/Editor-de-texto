@@ -412,7 +412,12 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                     q = retornar_no_atual(*lista, (*y)-1);
                     i = 0;
                     while((*x)-1 < 89 && i <= 1){
-                        inserir_caractere_posicao(lista, ' ', (*y)-1, *(x)-1);
+                        if((*x) < q->tam+2 && q->tam == 90){
+                            descer_caracteres(lista, (*y)-1, ' ', (*x)-1);
+                        }
+                        else{
+                            inserir_caractere_posicao(lista, ' ', (*y)-1, *(x)-1);
+                        }
                         aumentar_x(x, y);
                         i++;
                     }
@@ -423,7 +428,7 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                 //Se não for nenhuma das teclas acima, significa que é uma tecla de inserção padrão, neste caso armazena o caracter da estrutura, e se exceder o limite da tela/vetor
                 //cria outro nó e vai para a linha de baixo continuando a preencher os dados
                 else if(tecla >= 32 && tecla <= 126){
-                    if(*x >= 90){
+                    if(*x == 90){
                         q = retornar_no_atual(*lista, (*y)-1);
 
                         if(q->linha[q->tam] != '\n'){
@@ -438,22 +443,48 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                         }
                     }
                     if(ins == 1){
-                        q = retornar_no_atual(*lista, (*y)-1);
-                        if((*x) < q->tam+2 && q->linha[(*x)-1] != '\n'){
-                            remover_caractere_posicao(lista, (*y)-1, (*x)-1);
-                        }
-                        inserir_caractere_posicao(lista, tecla, (*y)-1, (*x)-1);
-                    }
-                    else{
-                        q = retornar_no_atual(*lista, (*y)-1);
-                        if((*x) < q->tam+2 && q->tam == 90){
-                            descer_caracteres(lista, (*y)-1, tecla, (*x)-1);
-//                            inserir_caractere_posicao(lista, tecla, (*y)-1, (*x)-1);
-//                            printf(" TAMANHO - %d", q->tam);
-//                            system("pause");
+                        if(*x == 91){
+                            q = retornar_no_atual(*lista, (*y)-1);
+                            q = q->next;
+                            *x = 1;
+                            if((*x) < q->tam+2 && q->linha[(*x)-1] != '\n'){
+                                remover_caractere_posicao(lista, (*y), 0);
+                            }
+                            inserir_caractere_posicao(lista, tecla, (*y), 0);
+                            (*y)++;
                         }
                         else{
+                            q = retornar_no_atual(*lista, (*y)-1);
+                            if((*x) < q->tam+2 && q->linha[(*x)-1] != '\n'){
+                                remover_caractere_posicao(lista, (*y)-1, (*x)-1);
+                            }
                             inserir_caractere_posicao(lista, tecla, (*y)-1, (*x)-1);
+                        }
+
+                    }
+                    else{
+                        if(*x == 91){
+                             q = retornar_no_atual(*lista, (*y)-1);
+                             q = q->next;
+                            if((*x) < q->tam+2 && q->tam == 90){
+//                                system("pause");
+                                descer_caracteres(lista, (*y), tecla, 0);
+                                inserir_caractere_comeco(lista, tecla, *y);
+                            }
+                            else{
+                                inserir_caractere_comeco(lista, tecla, *y);
+                                *x = 1;
+                                (*y)++;
+                            }
+                        }
+                        else{
+                            q = retornar_no_atual(*lista, (*y)-1);
+                            if((*x) < q->tam+2 && q->tam == 90){
+                                descer_caracteres(lista, (*y)-1, tecla, (*x)-1);
+                            }
+                            else{
+                                inserir_caractere_posicao(lista, tecla, (*y)-1, (*x)-1);
+                            }
                         }
                     }
                     limpar_tela();
@@ -462,6 +493,11 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                 }
             }
         }
+//        if((*x == 91)){
+//            limpar_tela();
+//            printf("%d", *y);
+//            system("pause");
+//        }
     } while (1);
 }
 
