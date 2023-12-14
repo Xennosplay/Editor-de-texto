@@ -34,6 +34,12 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                     case 60:
                         q = retornar_no_atual(*lista, 0);
                         salvar_arquivo(q);
+                        limpar_tela();
+                        printf("Arquivo Salvo\n");
+                        system("pause");
+                        limpar_tela();
+                        exibir(*lista);
+                        atualizar_cursor(*x, *y);
                         break;
                     //F10
                     case 68:
@@ -494,11 +500,6 @@ void monitoramento_teclas(LISTA **lista, int *x, int *y){
                 }
             }
         }
-//        if((*x == 91)){
-//            limpar_tela();
-//            printf("%d", *y);
-//            system("pause");
-//        }
     } while (1);
 }
 
