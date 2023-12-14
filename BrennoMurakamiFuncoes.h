@@ -100,9 +100,9 @@ void descer_caracteres(LISTA **lista, int no, char caractere, int pos){
     anterior = *lista;
     while(i < no){
         q = q->next;
+        aux = aux->next;
         i++;
     }
-    i = 0;
     while(aux->tam > 89 && aux->next != NULL)
     {
         aux = aux->next;
@@ -114,7 +114,6 @@ void descer_caracteres(LISTA **lista, int no, char caractere, int pos){
         if(aux->linha[90] != '\n'){
             aux->linha[90] = '\n';
         }
-
         criar_linha_final(lista);
         aux = aux->next;
         aux->linha[0] = '\n';
