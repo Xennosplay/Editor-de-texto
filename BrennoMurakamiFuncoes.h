@@ -114,24 +114,15 @@ void descer_caracteres(LISTA **lista, int no, char caractere, int pos){
         if(aux->linha[90] != '\n'){
             aux->linha[90] = '\n';
         }
-//        if(aux->linha[89] != 'a'){
-//            printf(" 89 - %c",);
-//        }
-//        else{
-//            printf(" 89 - tem a");
-//        }
-//        printf(" 89 - %c", aux->linha[89]);
-//            printf("Tamanho - %d", aux->tam);
-//        system("pause");
-//        if(aux->linha[90] != '\n' && aux->linha[89] != '\n'){
-//            aux->linha[90] = '\n';
-//            aux->tam++;
-//        }
+
         criar_linha_final(lista);
         aux = aux->next;
+        aux->linha[0] = '\n';
+        aux->tam++;
         i++;
     }
     while(i > no){
+       anterior = *lista;
        while(j < i-1)
        {
          anterior = anterior->next;
